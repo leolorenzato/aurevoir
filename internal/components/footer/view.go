@@ -1,0 +1,27 @@
+package footer
+
+import (
+	"aurevoir/internal/layout"
+	"log"
+)
+
+func (m Model) View() string {
+	rendered, err := m.render()
+	if err != nil {
+		log.Printf("footer render error: %v", err)
+		return ""
+	}
+
+	return rendered
+}
+
+func (m Model) render() (string, error) {
+	contentSize, err := layout.GetStyleContentSize(m.Style, m.AvailableSize)
+	if err != nil {
+		return "", err
+	}
+
+	return (m.Style.
+		Width(contentSize.Width).
+		Render(m.text)), nil
+}

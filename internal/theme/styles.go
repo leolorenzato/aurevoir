@@ -1,0 +1,17 @@
+package theme
+
+import "charm.land/lipgloss/v2"
+
+type MenuStyles struct {
+	Container    lipgloss.Style
+	Item         lipgloss.Style
+	SelectedItem lipgloss.Style
+}
+
+type Styles struct {
+	Error     lipgloss.Style
+	Container lipgloss.Style
+	Title     lipgloss.Style
+	Menu      MenuStyles
+	Footer    lipgloss.Style
+}
