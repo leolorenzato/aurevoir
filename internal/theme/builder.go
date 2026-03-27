@@ -10,11 +10,12 @@ const (
 func Build(cfg Cfg) Styles {
 
 	return Styles{
-		Error:     buildErrorStyle(),
-		Container: buildContainerStyle(cfg.Container),
-		Title:     buildTitleStyle(cfg.Title),
-		Menu:      buildMenuStyle(cfg.Menu),
-		Footer:    buildFooterStyle(cfg.Footer),
+		Error:         buildErrorStyle(),
+		Container:     buildContainerStyle(cfg.Container),
+		Title:         buildTitleStyle(cfg.Title),
+		Menu:          buildMenuStyle(cfg.Menu),
+		ConfirmDialog: buildConfirmDialogStyle(cfg.ConfirmDialog),
+		Footer:        buildFooterStyle(cfg.Footer),
 	}
 }
 
@@ -103,12 +104,50 @@ func buildMenuStyle(cfg MenuCfg) MenuStyles {
 	itemStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color(cfg.TextColor))
 
-	selectedItemsStyle := lipgloss.NewStyle().
+	selectedItemStyle := lipgloss.NewStyle().
 		Foreground(lipgloss.Color(cfg.SelectedItemTextColor))
 	return MenuStyles{
 		Container:    containerStyle,
 		Item:         itemStyle,
-		SelectedItem: selectedItemsStyle,
+		SelectedItem: selectedItemStyle,
+	}
+}
+
+func buildConfirmDialogStyle(cfg ConfirmDialogCfg) ConfirmDialogStyles {
+	containerStyle := lipgloss.NewStyle().
+		Padding(defaulVertPadding, defaulHorizPadding)
+	if cfg.Border {
+		var border lipgloss.Border
+		if cfg.BorderRounded {
+			border = lipgloss.RoundedBorder()
+		} else {
+			border = lipgloss.NormalBorder()
+		}
+		borderColor := lipgloss.Color(cfg.BorderColor)
+		containerStyle = containerStyle.
+			Border(border).
+			BorderForeground(borderColor)
+	} else {
+		var border lipgloss.Border
+		border = lipgloss.Border{
+			Top: " ", Bottom: " ",
+			Left: " ", Right: " ",
+			TopLeft: " ", TopRight: " ",
+			BottomLeft: " ", BottomRight: " ",
+		}
+		containerStyle = containerStyle.
+			Border(border)
+	}
+
+	optionStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color(cfg.TextColor))
+
+	selectedOptionStyle := lipgloss.NewStyle().
+		Foreground(lipgloss.Color(cfg.SelectedOptionTextColor))
+	return ConfirmDialogStyles{
+		Container:      containerStyle,
+		Option:         optionStyle,
+		SelectedOption: selectedOptionStyle,
 	}
 }
 

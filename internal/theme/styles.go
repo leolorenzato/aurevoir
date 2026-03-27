@@ -8,10 +8,17 @@ type MenuStyles struct {
 	SelectedItem lipgloss.Style
 }
 
+type ConfirmDialogStyles struct {
+	Container      lipgloss.Style
+	Option         lipgloss.Style
+	SelectedOption lipgloss.Style
+}
+
 type Styles struct {
-	Error     lipgloss.Style
-	Container lipgloss.Style
-	Title     lipgloss.Style
-	Menu      MenuStyles
-	Footer    lipgloss.Style
+	Error         lipgloss.Style
+	Container     lipgloss.Style
+	Title         lipgloss.Style
+	Menu          MenuStyles
+	ConfirmDialog ConfirmDialogStyles
+	Footer        lipgloss.Style
 }
