@@ -7,15 +7,17 @@ import (
 	"charm.land/lipgloss/v2"
 )
 
+const defaultText string = "Power Menu"
+
 type Model struct {
 	text          string
 	AvailableSize types.Size
 	Style         lipgloss.Style
 }
 
-func NewModel(text string, style lipgloss.Style) Model {
+func NewModel(style lipgloss.Style) Model {
 	return Model{
-		text:  text,
+		text:  defaultText,
 		Style: style,
 	}
 }

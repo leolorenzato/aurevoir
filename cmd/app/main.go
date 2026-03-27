@@ -2,6 +2,7 @@ package main
 
 import (
 	"aurevoir/internal/app"
+	"aurevoir/internal/items"
 	"aurevoir/internal/theme"
 	"flag"
 	"fmt"
@@ -46,10 +47,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	styles := theme.Build(cfg.Theme)
 	model := app.NewModel(
 		appName,
-		styles,
+		items.Build(cfg.Items),
+		theme.Build(cfg.Theme),
 	)
 	p := tea.NewProgram(
 		model,

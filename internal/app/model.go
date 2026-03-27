@@ -5,6 +5,7 @@ import (
 	"aurevoir/internal/components/menu"
 	"aurevoir/internal/components/title"
 	"aurevoir/internal/components/types"
+	"aurevoir/internal/items"
 	"aurevoir/internal/theme"
 
 	tea "charm.land/bubbletea/v2"
@@ -23,15 +24,23 @@ type Model struct {
 
 func NewModel(
 	appName string,
+	items []items.Item,
 	styles theme.Styles,
 ) Model {
+	var menuItems []menu.Item
+	for _, item := range items {
+		if item.Enable {
+			menuItems = append(menuItems, itemToMenuItem(item))
+		}
+	}
+
 	m := Model{
 		appName:        appName,
 		errorStyle:     styles.Error,
 		containerStyle: styles.Container,
-		title:          title.NewModel(titletext, styles.Title),
+		title:          title.NewModel(styles.Title),
 		menu: menu.NewModel(
-			items,
+			menuItems,
 			styles.Menu.Container,
 			styles.Menu.Item,
 			styles.Menu.SelectedItem,
@@ -58,4 +67,8 @@ func (m Model) Init() tea.Cmd {
 	}
 
 	return tea.Batch(cmds...)
+}
+
+func itemToMenuItem(item items.Item) menu.Item {
+	return menu.Item{Name: item.Label, Icon: item.Icon, Cmd: item.Cmd}
 }
