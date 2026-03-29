@@ -17,8 +17,9 @@ type Model struct {
 
 func NewModel(style lipgloss.Style) Model {
 	return Model{
-		text:  defaultText,
-		Style: style,
+		text:          defaultText,
+		AvailableSize: types.Size{},
+		Style:         style,
 	}
 }
 
