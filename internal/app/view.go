@@ -37,14 +37,14 @@ func (m Model) view() string {
 	}
 
 	m.title.AvailableSize = containerContentAvailableSize
-	renderedTitle := m.title.View()
-	if renderedTitle == "" {
+	renderedTitle, err := m.title.View()
+	if err != nil {
 		return m.viewErr("title rendering error", containerAvailableSize)
 	}
 
 	m.footer.AvailableSize = containerContentAvailableSize
-	renderedFooter := m.footer.View()
-	if renderedFooter == "" {
+	renderedFooter, err := m.footer.View()
+	if err != nil {
 		return m.viewErr("footer rendering error", containerAvailableSize)
 	}
 
@@ -57,8 +57,8 @@ func (m Model) view() string {
 	}
 
 	m.menu.AvailableSize = containerContentFreeSize
-	renderedMenu := m.menu.View()
-	if renderedMenu == "" {
+	renderedMenu, err := m.menu.View()
+	if err != nil {
 		return m.viewErr("menu rendering error", containerAvailableSize)
 	}
 
