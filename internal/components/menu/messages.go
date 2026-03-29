@@ -1,5 +1,7 @@
 package menu
 
-type MenuSelectedItemMsg struct {
+type SelectedItemMsg struct {
 	Item Item
 }
+
+type BlockMsg struct{}

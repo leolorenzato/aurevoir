@@ -14,6 +14,7 @@ type Item struct {
 }
 
 type Model struct {
+	block             bool
 	cursor            int
 	items             []Item
 	AvailableSize     types.Size
@@ -29,7 +30,9 @@ func NewModel(
 	selectedItemStyle lipgloss.Style,
 ) Model {
 	return Model{
+		block:             false,
 		items:             items,
+		AvailableSize:     types.Size{},
 		ContainerStyle:    containerStyle,
 		ItemStyle:         itemStyle,
 		SelectedItemStyle: selectedItemStyle,
