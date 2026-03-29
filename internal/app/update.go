@@ -16,6 +16,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.termSize.Width = msg.Width
 		m.termSize.Height = msg.Height
 		cmds = append(cmds, tea.ClearScreen)
+	case tea.KeyPressMsg:
+		switch msg.String() {
+		case "ctrl+c":
+			cmds = append(cmds, tea.Quit)
+		}
 	}
 
 	updated, cmd := m.title.Update(msg)

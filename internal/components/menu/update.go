@@ -10,8 +10,6 @@ func (m Model) Update(msg tea.Msg) (types.InternalModel, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyPressMsg:
 		switch msg.String() {
-		case "ctrl+c":
-			return m, tea.Quit
 		case "up":
 			m.decrementCursor()
 		case "down":
