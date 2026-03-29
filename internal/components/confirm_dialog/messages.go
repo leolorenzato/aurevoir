@@ -1,5 +1,7 @@
 package confirm_dialog
 
-type CancelAction struct{}
+type CancelActionMsg struct{}
 
-type ConfirmAction struct{}
+type ConfirmActionMsg struct{}
+
+type ShowMsg struct{}

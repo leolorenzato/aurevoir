@@ -8,19 +8,23 @@ import (
 
 func (m Model) Update(msg tea.Msg) (types.InternalModel, tea.Cmd) {
 	switch msg := msg.(type) {
+	case ShowMsg:
+		m.show = true
+		return m, nil
 	case tea.KeyPressMsg:
+		if !m.show {
+			return m, nil
+		}
 		switch msg.String() {
-		case "ctrl+c":
-			return m, tea.Quit
 		case "left":
 			m.selectLeft()
 		case "right":
 			m.selectRight()
 		case "enter":
 			if m.confirm {
-				return m, func() tea.Msg { return ConfirmAction{} }
+				return m, func() tea.Msg { return ConfirmActionMsg{} }
 			} else {
-				return m, func() tea.Msg { return CancelAction{} }
+				return m, func() tea.Msg { return CancelActionMsg{} }
 			}
 		}
 	}

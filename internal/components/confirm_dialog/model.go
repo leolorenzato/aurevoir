@@ -7,13 +7,8 @@ import (
 	"charm.land/lipgloss/v2"
 )
 
-type Item struct {
-	Name string
-	Icon string
-	Cmd  string
-}
-
 type Model struct {
+	show                bool
 	confirm             bool
 	AvailableSize       types.Size
 	ContainerStyle      lipgloss.Style
@@ -22,13 +17,14 @@ type Model struct {
 }
 
 func NewModel(
-	items []Item,
 	containerStyle lipgloss.Style,
 	itemStyle lipgloss.Style,
 	selectedItemStyle lipgloss.Style,
 ) Model {
 	return Model{
+		show:                false,
 		confirm:             false,
+		AvailableSize:       types.Size{},
 		ContainerStyle:      containerStyle,
 		OptionStyle:         itemStyle,
 		SelectedOptionStyle: selectedItemStyle,
