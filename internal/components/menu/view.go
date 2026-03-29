@@ -8,14 +8,14 @@ import (
 	"charm.land/lipgloss/v2"
 )
 
-func (m Model) View() string {
+func (m Model) View() (string, error) {
 	rendered, err := m.render()
 	if err != nil {
 		log.Printf("menu render error: %v", err)
-		return ""
+		return "", err
 	}
 
-	return rendered
+	return rendered, nil
 }
 
 func (m Model) render() (string, error) {
