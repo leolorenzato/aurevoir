@@ -67,6 +67,6 @@ func (m *Model) getSelectedItem() Item {
 	return m.items[m.cursor]
 }
 
-func (m *Model) isLocked() bool {
+func (m *Model) IsLocked() bool {
 	return m.lock
 }
