@@ -20,6 +20,7 @@ const appName string = "aurevoir"
 func main() {
 	version := flag.Bool("version", false, "print version information")
 	cfgPath := flag.String("c", "", "path to configuration file (required)")
+	dryRun := flag.Bool("dry-run", false, "dry run mode")
 	debug := flag.Bool("debug", false, "debug mode")
 	flag.Parse()
 
@@ -51,6 +52,7 @@ func main() {
 		appName,
 		items.Build(cfg.Items),
 		theme.Build(cfg.Theme),
+		*dryRun,
 	)
 	p := tea.NewProgram(
 		model,

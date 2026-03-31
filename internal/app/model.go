@@ -28,6 +28,7 @@ func NewModel(
 	appName string,
 	items []items.Item,
 	styles theme.Styles,
+	dryRun bool,
 ) Model {
 	var menuItems []menu.Item
 	for _, item := range items {
@@ -46,6 +47,7 @@ func NewModel(
 			styles.Menu.Container,
 			styles.Menu.Item,
 			styles.Menu.SelectedItem,
+			dryRun,
 		),
 		confirm_dialog: confirm_dialog.NewModel(
 			styles.ConfirmDialog.Container,

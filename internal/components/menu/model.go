@@ -21,6 +21,7 @@ type Model struct {
 	ContainerStyle    lipgloss.Style
 	ItemStyle         lipgloss.Style
 	SelectedItemStyle lipgloss.Style
+	dryRun            bool
 }
 
 func NewModel(
@@ -28,6 +29,7 @@ func NewModel(
 	containerStyle lipgloss.Style,
 	itemStyle lipgloss.Style,
 	selectedItemStyle lipgloss.Style,
+	dryRun bool,
 ) Model {
 	return Model{
 		lock:              false,
@@ -36,6 +38,7 @@ func NewModel(
 		ContainerStyle:    containerStyle,
 		ItemStyle:         itemStyle,
 		SelectedItemStyle: selectedItemStyle,
+		dryRun:            dryRun,
 	}
 }
 
