@@ -14,7 +14,7 @@ type Item struct {
 }
 
 type Model struct {
-	block             bool
+	lock              bool
 	cursor            int
 	items             []Item
 	AvailableSize     types.Size
@@ -30,7 +30,7 @@ func NewModel(
 	selectedItemStyle lipgloss.Style,
 ) Model {
 	return Model{
-		block:             false,
+		lock:              false,
 		items:             items,
 		AvailableSize:     types.Size{},
 		ContainerStyle:    containerStyle,
@@ -65,4 +65,8 @@ func (m *Model) clipCursor() {
 
 func (m *Model) getSelectedItem() Item {
 	return m.items[m.cursor]
+}
+
+func (m *Model) isLocked() bool {
+	return m.lock
 }

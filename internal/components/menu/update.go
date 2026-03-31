@@ -8,11 +8,17 @@ import (
 
 func (m Model) Update(msg tea.Msg) (types.InternalModel, tea.Cmd) {
 	switch msg := msg.(type) {
-	case BlockMsg:
-		m.block = true
+	case LaunchSelectedItemCmdMsg:
+		item := m.getSelectedItem()
+		return m, LaunchCmd(item.Cmd)
+	case LockMsg:
+		m.lock = true
+		return m, nil
+	case UnlockMsg:
+		m.lock = false
 		return m, nil
 	case tea.KeyPressMsg:
-		if m.block {
+		if m.lock {
 			return m, nil
 		}
 		switch msg.String() {
@@ -21,8 +27,7 @@ func (m Model) Update(msg tea.Msg) (types.InternalModel, tea.Cmd) {
 		case "down":
 			m.incrementCursor()
 		case "enter":
-			item := m.getSelectedItem()
-			return m, func() tea.Msg { return SelectedItemMsg{Item: item} }
+			return m, func() tea.Msg { return ItemSelectedMsg{} }
 		}
 	}
 

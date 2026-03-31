@@ -1,7 +1,9 @@
 package menu
 
-type SelectedItemMsg struct {
-	Item Item
-}
+type ItemSelectedMsg struct{}
 
-type BlockMsg struct{}
+type LaunchSelectedItemCmdMsg struct{}
+
+type LockMsg struct{}
+
+type UnlockMsg struct{}
