@@ -3,6 +3,8 @@ package app
 import (
 	"aurevoir/internal/components/types"
 	"aurevoir/internal/layout"
+	"aurevoir/internal/utils"
+	"fmt"
 	"log"
 
 	tea "charm.land/bubbletea/v2"
@@ -25,54 +27,17 @@ func (m Model) view() string {
 	)
 	if err != nil {
 		log.Printf("get container content size error: %v", err)
-		return m.viewErr("terminal size too small", containerAvailableSize)
+		return m.viewErr(fmt.Errorf("terminal size too small"), containerAvailableSize)
 	}
-	containerContentAvailableSize, err := layout.GetStyleContentAvailableSize(
-		m.containerStyle,
-		containerAvailableSize,
-	)
+	content, err := m.getContent(containerAvailableSize)
 	if err != nil {
-		log.Printf("get container content available size error: %v", err)
-		return m.viewErr("terminal size too small", containerAvailableSize)
+		return m.viewErr(err, containerAvailableSize)
 	}
-
-	m.title.AvailableSize = containerContentAvailableSize
-	renderedTitle, err := m.title.View()
-	if err != nil {
-		return m.viewErr("title rendering error", containerAvailableSize)
-	}
-
-	m.footer.AvailableSize = containerContentAvailableSize
-	renderedFooter, err := m.footer.View()
-	if err != nil {
-		return m.viewErr("footer rendering error", containerAvailableSize)
-	}
-
-	containerContentFreeHeight := containerContentAvailableSize.Height -
-		lipgloss.Height(renderedTitle) -
-		lipgloss.Height(renderedFooter)
-	containerContentFreeSize := types.Size{
-		Width:  containerContentAvailableSize.Width,
-		Height: containerContentFreeHeight,
-	}
-
-	m.menu.AvailableSize = containerContentFreeSize
-	renderedMenu, err := m.menu.View()
-	if err != nil {
-		return m.viewErr("menu rendering error", containerAvailableSize)
-	}
-
-	joinedContent := lipgloss.JoinVertical(
-		lipgloss.Center,
-		renderedTitle,
-		renderedMenu,
-		renderedFooter,
-	)
 
 	renderedContainer := m.containerStyle.
 		Width(containerContentSize.Width).
 		Height(containerContentSize.Height).
-		Render(joinedContent)
+		Render(content)
 
 	return lipgloss.Place(
 		containerAvailableSize.Width,
@@ -83,10 +48,71 @@ func (m Model) view() string {
 	)
 }
 
-func (m Model) viewErr(err string, size types.Size) string {
+func (m Model) getContent(containerAvailableSize types.Size) (string, error) {
+	containerContentAvailableSize, err := layout.GetStyleContentAvailableSize(
+		m.containerStyle,
+		containerAvailableSize,
+	)
+	if err != nil {
+		log.Printf("get container content available size error: %v", err)
+		return "", fmt.Errorf("terminal size too small")
+	}
+
+	m.title.AvailableSize = containerContentAvailableSize
+	renderedTitle, err := m.title.View()
+	if err != nil {
+		return "", fmt.Errorf("title rendering error")
+	}
+
+	m.footer.AvailableSize = containerContentAvailableSize
+	renderedFooter, err := m.footer.View()
+	if err != nil {
+		return "", fmt.Errorf("footer rendering error")
+	}
+
+	containerContentReservedSize := types.Size{
+		Width: 0,
+		Height: lipgloss.Height(renderedTitle) +
+			lipgloss.Height(renderedFooter),
+	}
+	containerContentFreeSize := types.SubtractSize(
+		containerContentAvailableSize,
+		containerContentReservedSize,
+	)
+
+	m.menu.AvailableSize = containerContentFreeSize
+	renderedMenu, err := m.menu.View()
+	if err != nil {
+		return "", fmt.Errorf("menu rendering error")
+	}
+
+	m.confirm_dialog.AvailableSize = containerContentFreeSize
+	renderedConfirmDialog, err := m.confirm_dialog.View()
+	if err != nil {
+		return "", fmt.Errorf("confirm dialog rendering error")
+	}
+
+	if m.confirm_dialog.IsShown() {
+		return lipgloss.JoinVertical(
+			lipgloss.Center,
+			renderedTitle,
+			renderedConfirmDialog,
+			renderedFooter,
+		), nil
+	}
+	return lipgloss.JoinVertical(
+		lipgloss.Center,
+		renderedTitle,
+		renderedMenu,
+		renderedFooter,
+	), nil
+}
+
+func (m Model) viewErr(err error, size types.Size) string {
+	utils.AssertErr(err)
 	renderedErr := m.errorStyle.
 		Width(size.Width).
-		Render(err)
+		Render(err.Error())
 
 	return lipgloss.Place(
 		size.Width,
