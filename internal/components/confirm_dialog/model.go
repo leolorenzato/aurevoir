@@ -43,6 +43,6 @@ func (m *Model) selectRight() {
 	m.confirm = true
 }
 
-func (m *Model) isShown() bool {
+func (m *Model) IsShown() bool {
 	return m.show
 }
