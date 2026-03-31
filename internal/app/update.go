@@ -1,6 +1,7 @@
 package app
 
 import (
+	"aurevoir/internal/components/confirm_dialog"
 	"aurevoir/internal/components/footer"
 	"aurevoir/internal/components/menu"
 	"aurevoir/internal/components/title"
@@ -21,7 +22,34 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c":
 			cmds = append(cmds, tea.Quit)
 		}
+	case menu.ItemSelectedMsg:
+		cmds = append(
+			cmds,
+			func() tea.Msg { return menu.LockMsg{} },
+			func() tea.Msg { return confirm_dialog.ShowMsg{} },
+		)
+	case confirm_dialog.CancelActionMsg:
+		cmds = append(
+			cmds,
+			func() tea.Msg { return confirm_dialog.HideMsg{} },
+			func() tea.Msg { return menu.UnlockMsg{} },
+		)
+	case confirm_dialog.ConfirmActionMsg:
+		cmds = append(
+			cmds,
+			func() tea.Msg { return menu.LaunchSelectedItemCmdMsg{} },
+			func() tea.Msg { return confirm_dialog.HideMsg{} },
+			func() tea.Msg { return menu.UnlockMsg{} },
+		)
 	}
+
+	subModelsCmd := m.updateSubModels(msg)
+
+	return m, tea.Batch(tea.Batch(cmds...), subModelsCmd)
+}
+
+func (m Model) updateSubModels(msg tea.Msg) tea.Cmd {
+	var cmds []tea.Cmd
 
 	updated, cmd := m.title.Update(msg)
 	m.title = updated.(title.Model)
@@ -41,5 +69,5 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		cmds = append(cmds, cmd)
 	}
 
-	return m, tea.Batch(cmds...)
+	return tea.Batch(cmds...)
 }
