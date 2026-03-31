@@ -1,6 +1,7 @@
 package app
 
 import (
+	"aurevoir/internal/components/confirm_dialog"
 	"aurevoir/internal/components/footer"
 	"aurevoir/internal/components/menu"
 	"aurevoir/internal/components/title"
@@ -19,6 +20,7 @@ type Model struct {
 	containerStyle lipgloss.Style
 	title          title.Model
 	menu           menu.Model
+	confirm_dialog confirm_dialog.Model
 	footer         footer.Model
 }
 
@@ -44,6 +46,11 @@ func NewModel(
 			styles.Menu.Container,
 			styles.Menu.Item,
 			styles.Menu.SelectedItem,
+		),
+		confirm_dialog: confirm_dialog.NewModel(
+			styles.ConfirmDialog.Container,
+			styles.ConfirmDialog.Option,
+			styles.ConfirmDialog.SelectedOption,
 		),
 		footer: footer.NewModel(styles.Footer),
 	}
