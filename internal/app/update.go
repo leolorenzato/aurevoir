@@ -48,7 +48,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, tea.Batch(tea.Batch(cmds...), subModelsCmd)
 }
 
-func (m Model) updateSubModels(msg tea.Msg) tea.Cmd {
+func (m *Model) updateSubModels(msg tea.Msg) tea.Cmd {
 	var cmds []tea.Cmd
 
 	updated, cmd := m.title.Update(msg)
@@ -59,6 +59,12 @@ func (m Model) updateSubModels(msg tea.Msg) tea.Cmd {
 
 	updated, cmd = m.menu.Update(msg)
 	m.menu = updated.(menu.Model)
+	if cmd != nil {
+		cmds = append(cmds, cmd)
+	}
+
+	updated, cmd = m.confirm_dialog.Update(msg)
+	m.confirm_dialog = updated.(confirm_dialog.Model)
 	if cmd != nil {
 		cmds = append(cmds, cmd)
 	}
