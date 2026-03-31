@@ -42,7 +42,7 @@ func (m Model) render() (string, error) {
 	}
 
 	question := "Are you sure?"
-	choices := yesStyle.Render("Yes") + "  " + noStyle.Render("No")
+	choices := noStyle.Render("No") + "  " + yesStyle.Render("Yes")
 	text := lipgloss.JoinVertical(lipgloss.Center, question, choices)
 
 	textWidth := lipgloss.Width(text)

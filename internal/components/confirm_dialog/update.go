@@ -10,6 +10,7 @@ func (m Model) Update(msg tea.Msg) (types.InternalModel, tea.Cmd) {
 	switch msg := msg.(type) {
 	case ShowMsg:
 		m.show = true
+		m.selectLeft()
 		return m, nil
 	case HideMsg:
 		m.show = false
