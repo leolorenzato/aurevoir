@@ -42,3 +42,7 @@ func (m *Model) selectLeft() {
 func (m *Model) selectRight() {
 	m.confirm = true
 }
+
+func (m *Model) isShown() bool {
+	return m.show
+}

@@ -11,6 +11,9 @@ func (m Model) Update(msg tea.Msg) (types.InternalModel, tea.Cmd) {
 	case ShowMsg:
 		m.show = true
 		return m, nil
+	case HideMsg:
+		m.show = false
+		return m, nil
 	case tea.KeyPressMsg:
 		if !m.show {
 			return m, nil
