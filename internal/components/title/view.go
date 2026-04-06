@@ -24,7 +24,11 @@ func (m Model) render() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	truncText := layout.Truncate(layout.StripNonSpaceWhitespace(m.text), availableContentSize.Width, "")
+	truncText := layout.Truncate(
+		layout.StripNonSpaceWhitespace(m.text),
+		availableContentSize.Width,
+		"",
+	)
 
 	return (m.Style.
 		Width(contentSize.Width).
