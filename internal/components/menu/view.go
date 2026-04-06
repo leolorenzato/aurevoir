@@ -58,7 +58,7 @@ func (m Model) render() (string, error) {
 		slices.Reverse(items)
 	}
 
-	menuText := lipgloss.JoinVertical(lipgloss.Left, items...)
+	menuText := lipgloss.JoinVertical(lipgloss.Center, items...)
 
 	return m.ContainerStyle.
 		Width(contentSize.Width).
@@ -67,12 +67,19 @@ func (m Model) render() (string, error) {
 }
 
 func (m Model) renderMenuItem(item Item, itemIndex int) (string, error) {
-	availableContentWidth, err := layout.GetStyleContentAvailableWidth(m.ContainerStyle, m.AvailableSize.Width)
+	availableContentWidth, err := layout.GetStyleContentAvailableWidth(
+		m.ContainerStyle,
+		m.AvailableSize.Width,
+	)
 	if err != nil {
 		return "", err
 	}
 	text := item.Icon + " " + item.Name
-	truncText := layout.Truncate(layout.StripNonSpaceWhitespace(text), availableContentWidth, "...")
+	truncText := layout.Truncate(
+		layout.StripNonSpaceWhitespace(text),
+		availableContentWidth,
+		"...",
+	)
 	if itemIndex == m.cursor {
 		return m.SelectedItemStyle.Render(truncText), nil
 	}
