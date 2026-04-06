@@ -63,6 +63,7 @@ func (m Model) render() (string, error) {
 	return m.ContainerStyle.
 		Width(contentSize.Width).
 		Height(contentSize.Height).
+		Align(lipgloss.Center, lipgloss.Center).
 		Render(menuText), nil
 }
 
@@ -74,7 +75,14 @@ func (m Model) renderMenuItem(item Item, itemIndex int) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	text := item.Icon + " " + item.Name
+
+	var text string
+	if item.Icon != "" {
+		text = item.Icon + " " + item.Name
+	} else {
+		text = item.Name
+	}
+
 	truncText := layout.Truncate(
 		layout.StripNonSpaceWhitespace(text),
 		availableContentWidth,
@@ -83,5 +91,6 @@ func (m Model) renderMenuItem(item Item, itemIndex int) (string, error) {
 	if itemIndex == m.cursor {
 		return m.SelectedItemStyle.Render(truncText), nil
 	}
+
 	return m.ItemStyle.Render(truncText), nil
 }
