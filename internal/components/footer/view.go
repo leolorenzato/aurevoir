@@ -3,6 +3,8 @@ package footer
 import (
 	"aurevoir/internal/layout"
 	"log"
+
+	"charm.land/lipgloss/v2"
 )
 
 func (m Model) View() (string, error) {
@@ -23,5 +25,6 @@ func (m Model) render() (string, error) {
 
 	return (m.Style.
 		Width(contentSize.Width).
+		Align(lipgloss.Center, lipgloss.Center).
 		Render(m.text)), nil
 }
