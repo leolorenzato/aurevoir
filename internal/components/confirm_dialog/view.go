@@ -66,5 +66,6 @@ func (m Model) render() (string, error) {
 	return m.ContainerStyle.
 		Width(contentSize.Width).
 		Height(contentSize.Height).
+		Align(lipgloss.Center, lipgloss.Center).
 		Render(text), nil
 }
