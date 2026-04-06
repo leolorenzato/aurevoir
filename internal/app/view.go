@@ -37,6 +37,7 @@ func (m Model) view() string {
 	renderedContainer := m.containerStyle.
 		Width(containerContentSize.Width).
 		Height(containerContentSize.Height).
+		Align(lipgloss.Center, lipgloss.Center).
 		Render(content)
 
 	return lipgloss.Place(
@@ -112,6 +113,8 @@ func (m Model) viewErr(err error, size types.Size) string {
 	utils.AssertErr(err)
 	renderedErr := m.errorStyle.
 		Width(size.Width).
+		Height(size.Height).
+		Align(lipgloss.Center, lipgloss.Center).
 		Render(err.Error())
 
 	return lipgloss.Place(
