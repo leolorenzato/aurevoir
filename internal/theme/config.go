@@ -10,36 +10,36 @@ type Cfg struct {
 
 type ContainerCfg struct {
 	Border        bool   `toml:"border"`
-	BorderColor   string `toml:"borderColor"`
-	BorderRounded bool   `toml:"borderRounded"`
+	BorderColor   string `toml:"border_color"`
+	BorderRounded bool   `toml:"border_rounded"`
 }
 
 type TitleCfg struct {
 	Border        bool   `toml:"border"`
-	BorderColor   string `toml:"borderColor"`
-	BorderRounded bool   `toml:"borderRounded"`
-	TextColor     string `toml:"textColor"`
+	BorderColor   string `toml:"border_color"`
+	BorderRounded bool   `toml:"border_rounded"`
+	TextColor     string `toml:"text_color"`
 }
 
 type MenuCfg struct {
 	Border                bool   `toml:"border"`
-	BorderColor           string `toml:"borderColor"`
-	BorderRounded         bool   `toml:"borderRounded"`
-	TextColor             string `toml:"textColor"`
-	SelectedItemTextColor string `toml:"selectedItemTextColor"`
+	BorderColor           string `toml:"border_color"`
+	BorderRounded         bool   `toml:"border_rounded"`
+	TextColor             string `toml:"text_color"`
+	SelectedItemTextColor string `toml:"selected_item_text_color"`
 }
 
 type ConfirmDialogCfg struct {
 	Border                  bool   `toml:"border"`
-	BorderColor             string `toml:"borderColor"`
-	BorderRounded           bool   `toml:"borderRounded"`
-	TextColor               string `toml:"textColor"`
-	SelectedOptionTextColor string `toml:"selectedOptionTextColor"`
+	BorderColor             string `toml:"border_color"`
+	BorderRounded           bool   `toml:"border_rounded"`
+	TextColor               string `toml:"text_color"`
+	SelectedOptionTextColor string `toml:"selected_option_text_color"`
 }
 
 type FooterCfg struct {
 	Border        bool   `toml:"border"`
-	BorderColor   string `toml:"borderColor"`
-	BorderRounded bool   `toml:"borderRounded"`
-	TextColor     string `toml:"textColor"`
+	BorderColor   string `toml:"border_color"`
+	BorderRounded bool   `toml:"border_rounded"`
+	TextColor     string `toml:"text_color"`
 }
