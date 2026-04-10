@@ -2,9 +2,7 @@ package items
 
 const (
 	shutdownLabel string = "Shutdown"
-	shutdownCmd   string = "shutdown -h now"
 	rebootLabel   string = "Reboot"
-	rebootCmd     string = "shutdown -r now"
 )
 
 func Build(cfg Cfg) []Item {
@@ -16,9 +14,9 @@ func Build(cfg Cfg) []Item {
 }
 
 func buildShutdownItem(cfg ShutdownCfg) Item {
-	return Item{Enable: true, Icon: cfg.icon, Label: shutdownLabel, Cmd: shutdownCmd}
+	return Item{Enable: true, Icon: cfg.Icon, Label: shutdownLabel, Cmd: cfg.Cmd}
 }
 
 func buildRebootItem(cfg RebootCfg) Item {
-	return Item{Enable: true, Icon: cfg.icon, Label: rebootLabel, Cmd: rebootCmd}
+	return Item{Enable: true, Icon: cfg.Icon, Label: rebootLabel, Cmd: cfg.Cmd}
 }

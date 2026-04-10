@@ -19,7 +19,7 @@ const appName string = "aurevoir"
 
 func main() {
 	version := flag.Bool("version", false, "print version information")
-	cfgPath := flag.String("c", "", "path to configuration file (required)")
+	cfgPath := flag.String("c", "", "path to configuration file")
 	dryRun := flag.Bool("dry-run", false, "dry run mode")
 	debug := flag.Bool("debug", false, "debug mode")
 	flag.Parse()
@@ -28,8 +28,6 @@ func main() {
 		printVersion()
 		os.Exit(0)
 	}
-
-	requireStringFlag(cfgPath, "c")
 
 	if *debug {
 		f, err := getLogFile()
@@ -42,10 +40,19 @@ func main() {
 		log.SetOutput(io.Discard)
 	}
 
-	var cfg Cfg
-	if _, err := toml.DecodeFile(*cfgPath, &cfg); err != nil {
-		log.Printf("failed to load configuration file %s", *cfgPath)
-		os.Exit(1)
+	cfg := Cfg{
+		Items: items.DefaultCfg(),
+		Theme: theme.DefaultCfg(),
+	}
+
+	var rawCfg RawCfg
+	if *cfgPath != "" {
+		if _, err := toml.DecodeFile(*cfgPath, &rawCfg); err != nil {
+			log.Printf("failed to load configuration file %s", *cfgPath)
+			os.Exit(1)
+		}
+		cfg.Items.MergeRaw(rawCfg.Items)
+		cfg.Theme.MergeRaw(rawCfg.Theme)
 	}
 
 	model := app.NewModel(
@@ -59,13 +66,6 @@ func main() {
 	)
 	if _, err := p.Run(); err != nil {
 		log.Printf("error: %v", err)
-		os.Exit(1)
-	}
-}
-
-func requireStringFlag(value *string, name string) {
-	if *value == "" {
-		fmt.Fprintf(os.Stderr, "%s is required\n", name)
 		os.Exit(1)
 	}
 }

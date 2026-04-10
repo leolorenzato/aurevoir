@@ -5,7 +5,12 @@ import (
 	"aurevoir/internal/theme"
 )
 
+type RawCfg struct {
+	Items items.RawCfg `toml:"items"`
+	Theme theme.RawCfg `toml:"theme"`
+}
+
 type Cfg struct {
-	Items items.Cfg `toml:"items"`
-	Theme theme.Cfg `toml:"theme"`
+	Items items.Cfg
+	Theme theme.Cfg
 }
