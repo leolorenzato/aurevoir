@@ -7,8 +7,6 @@ import (
 	"charm.land/lipgloss/v2"
 )
 
-const defaultText string = "• ↑/↓ to navigate • ↵ to select • ctrl+c to quit"
-
 type Model struct {
 	text          string
 	AvailableSize types.Size
@@ -17,7 +15,7 @@ type Model struct {
 
 func NewModel(style lipgloss.Style) Model {
 	return Model{
-		text:          defaultText,
+		text:          "",
 		AvailableSize: types.Size{},
 		Style:         style,
 	}

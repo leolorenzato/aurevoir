@@ -27,12 +27,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			cmds,
 			func() tea.Msg { return menu.LockMsg{} },
 			func() tea.Msg { return confirm_dialog.ShowMsg{} },
+			func() tea.Msg { return footer.ToggleConfirmDialogHintMsg{} },
 		)
 	case confirm_dialog.CancelActionMsg:
 		cmds = append(
 			cmds,
 			func() tea.Msg { return confirm_dialog.HideMsg{} },
 			func() tea.Msg { return menu.UnlockMsg{} },
+			func() tea.Msg { return footer.ToggleMenuHintMsg{} },
 		)
 	case confirm_dialog.ConfirmActionMsg:
 		cmds = append(
@@ -40,6 +42,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			func() tea.Msg { return menu.LaunchSelectedItemCmdMsg{} },
 			func() tea.Msg { return confirm_dialog.HideMsg{} },
 			func() tea.Msg { return menu.UnlockMsg{} },
+			func() tea.Msg { return footer.ToggleMenuHintMsg{} },
 		)
 	}
 

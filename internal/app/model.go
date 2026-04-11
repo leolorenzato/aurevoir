@@ -63,6 +63,8 @@ func NewModel(
 func (m Model) Init() tea.Cmd {
 	var cmds []tea.Cmd
 
+	cmds = append(cmds, func() tea.Msg { return footer.ToggleMenuHintMsg{} })
+
 	if cmd := m.title.Init(); cmd != nil {
 		cmds = append(cmds, cmd)
 	}
