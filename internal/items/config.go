@@ -10,11 +10,23 @@ type Cfg struct {
 }
 
 func (c *Cfg) MergeRaw(r RawCfg) {
+	if r.Lock != nil {
+		c.Lock.MergeRaw(*r.Lock)
+	}
 	if r.Shutdown != nil {
 		c.Shutdown.MergeRaw(*r.Shutdown)
 	}
 	if r.Reboot != nil {
 		c.Reboot.MergeRaw(*r.Reboot)
+	}
+	if r.Logout != nil {
+		c.Logout.MergeRaw(*r.Logout)
+	}
+	if r.Suspend != nil {
+		c.Suspend.MergeRaw(*r.Suspend)
+	}
+	if r.Hibernate != nil {
+		c.Hibernate.MergeRaw(*r.Hibernate)
 	}
 }
 
