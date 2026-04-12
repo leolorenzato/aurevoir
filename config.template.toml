@@ -1,0 +1,60 @@
+[items.lock]
+show = true
+icon = ""
+cmd = "loginctl lock-session"
+
+[items.shutdown]
+show = true
+icon = ""
+cmd = "shutdown -h now"
+
+[items.reboot]
+show = true
+icon = ""
+cmd = "shutdown -r now"
+
+[items.logout]
+show = true
+icon = ""
+cmd = "loginctl terminate-session $XDG_SESSION_ID"
+
+[items.suspend]
+show = true
+icon = ""
+cmd = "systemctl suspend"
+
+[items.hibernate]
+show = true
+icon = ""
+cmd = "systemctl hibernate"
+
+[theme.container]
+border = false
+border_color = "#9399b2"
+border_rounded = true
+
+[theme.title]
+border = false
+border_color = "#9399b2"
+border_rounded = true
+text_color = "#f2cdcd"
+
+[theme.menu]
+border = true
+border_color = "#9399b2"
+border_rounded = true
+text_color = "#a6adc8"
+selected_item_text_color = "#a6e3a1"
+
+[theme.confirm_dialog]
+border = true
+border_color = "#9399b2"
+border_rounded = true
+text_color = "#a6adc8"
+selected_option_text_color = "#a6e3a1"
+
+[theme.footer]
+border = false
+border_color = "#9399b2"
+border_rounded = true
+text_color = "#6c7086"
