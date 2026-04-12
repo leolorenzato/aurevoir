@@ -1,8 +1,12 @@
 package items
 
 type Cfg struct {
-	Shutdown ShutdownCfg
-	Reboot   RebootCfg
+	Lock      LockCfg
+	Shutdown  ShutdownCfg
+	Reboot    RebootCfg
+	Logout    LogoutCfg
+	Suspend   SuspendCfg
+	Hibernate HibernateCfg
 }
 
 func (c *Cfg) MergeRaw(r RawCfg) {
@@ -11,6 +15,20 @@ func (c *Cfg) MergeRaw(r RawCfg) {
 	}
 	if r.Reboot != nil {
 		c.Reboot.MergeRaw(*r.Reboot)
+	}
+}
+
+type LockCfg struct {
+	Icon string
+	Cmd  string
+}
+
+func (c *LockCfg) MergeRaw(r RawLockCfg) {
+	if r.Icon != nil {
+		c.Icon = *r.Icon
+	}
+	if r.Cmd != nil {
+		c.Cmd = *r.Cmd
 	}
 }
 
@@ -34,6 +52,48 @@ type RebootCfg struct {
 }
 
 func (c *RebootCfg) MergeRaw(r RawRebootCfg) {
+	if r.Icon != nil {
+		c.Icon = *r.Icon
+	}
+	if r.Cmd != nil {
+		c.Cmd = *r.Cmd
+	}
+}
+
+type LogoutCfg struct {
+	Icon string
+	Cmd  string
+}
+
+func (c *LogoutCfg) MergeRaw(r RawLogoutCfg) {
+	if r.Icon != nil {
+		c.Icon = *r.Icon
+	}
+	if r.Cmd != nil {
+		c.Cmd = *r.Cmd
+	}
+}
+
+type SuspendCfg struct {
+	Icon string
+	Cmd  string
+}
+
+func (c *SuspendCfg) MergeRaw(r RawSuspendCfg) {
+	if r.Icon != nil {
+		c.Icon = *r.Icon
+	}
+	if r.Cmd != nil {
+		c.Cmd = *r.Cmd
+	}
+}
+
+type HibernateCfg struct {
+	Icon string
+	Cmd  string
+}
+
+func (c *HibernateCfg) MergeRaw(r RawHibernateCfg) {
 	if r.Icon != nil {
 		c.Icon = *r.Icon
 	}
