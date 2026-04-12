@@ -18,14 +18,14 @@ func DefaultCfg() Cfg {
 			BorderColor:           "#9399b2",
 			BorderRounded:         true,
 			TextColor:             "#a6adc8",
-			SelectedItemTextColor: "#A6E3A1",
+			SelectedItemTextColor: "#a6e3a1",
 		},
 		ConfirmDialog: ConfirmDialogCfg{
 			Border:                  true,
 			BorderColor:             "#9399b2",
 			BorderRounded:           true,
 			TextColor:               "#a6adc8",
-			SelectedOptionTextColor: "#A6E3A1",
+			SelectedOptionTextColor: "#a6e3a1",
 		},
 		Footer: FooterCfg{
 			Border:        false,
