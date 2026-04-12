@@ -31,11 +31,15 @@ func (c *Cfg) MergeRaw(r RawCfg) {
 }
 
 type LockCfg struct {
+	Show bool
 	Icon string
 	Cmd  string
 }
 
 func (c *LockCfg) MergeRaw(r RawLockCfg) {
+	if r.Show != nil {
+		c.Show = *r.Show
+	}
 	if r.Icon != nil {
 		c.Icon = *r.Icon
 	}
@@ -45,11 +49,15 @@ func (c *LockCfg) MergeRaw(r RawLockCfg) {
 }
 
 type ShutdownCfg struct {
+	Show bool
 	Icon string
 	Cmd  string
 }
 
 func (c *ShutdownCfg) MergeRaw(r RawShutdownCfg) {
+	if r.Show != nil {
+		c.Show = *r.Show
+	}
 	if r.Icon != nil {
 		c.Icon = *r.Icon
 	}
@@ -59,11 +67,15 @@ func (c *ShutdownCfg) MergeRaw(r RawShutdownCfg) {
 }
 
 type RebootCfg struct {
+	Show bool
 	Icon string
 	Cmd  string
 }
 
 func (c *RebootCfg) MergeRaw(r RawRebootCfg) {
+	if r.Show != nil {
+		c.Show = *r.Show
+	}
 	if r.Icon != nil {
 		c.Icon = *r.Icon
 	}
@@ -73,11 +85,15 @@ func (c *RebootCfg) MergeRaw(r RawRebootCfg) {
 }
 
 type LogoutCfg struct {
+	Show bool
 	Icon string
 	Cmd  string
 }
 
 func (c *LogoutCfg) MergeRaw(r RawLogoutCfg) {
+	if r.Show != nil {
+		c.Show = *r.Show
+	}
 	if r.Icon != nil {
 		c.Icon = *r.Icon
 	}
@@ -87,11 +103,15 @@ func (c *LogoutCfg) MergeRaw(r RawLogoutCfg) {
 }
 
 type SuspendCfg struct {
+	Show bool
 	Icon string
 	Cmd  string
 }
 
 func (c *SuspendCfg) MergeRaw(r RawSuspendCfg) {
+	if r.Show != nil {
+		c.Show = *r.Show
+	}
 	if r.Icon != nil {
 		c.Icon = *r.Icon
 	}
@@ -101,11 +121,15 @@ func (c *SuspendCfg) MergeRaw(r RawSuspendCfg) {
 }
 
 type HibernateCfg struct {
+	Show bool
 	Icon string
 	Cmd  string
 }
 
 func (c *HibernateCfg) MergeRaw(r RawHibernateCfg) {
+	if r.Show != nil {
+		c.Show = *r.Show
+	}
 	if r.Icon != nil {
 		c.Icon = *r.Icon
 	}

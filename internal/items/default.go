@@ -12,26 +12,32 @@ const (
 func DefaultCfg() Cfg {
 	return Cfg{
 		Lock: LockCfg{
+			Show: true,
 			Icon: "",
 			Cmd:  defaultLockCmd,
 		},
 		Shutdown: ShutdownCfg{
+			Show: true,
 			Icon: "",
 			Cmd:  defaultShutdownCmd,
 		},
 		Reboot: RebootCfg{
+			Show: true,
 			Icon: "",
 			Cmd:  defaultRebootCmd,
 		},
 		Logout: LogoutCfg{
+			Show: true,
 			Icon: "",
 			Cmd:  defaultLogoutCmd,
 		},
 		Suspend: SuspendCfg{
+			Show: true,
 			Icon: "",
 			Cmd:  defaultSuspendCmd,
 		},
 		Hibernate: HibernateCfg{
+			Show: true,
 			Icon: "",
 			Cmd:  defaultHibernateCmd,
 		},
