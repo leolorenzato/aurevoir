@@ -9,7 +9,6 @@ import (
 	"io"
 	"log"
 	"os"
-	"runtime/debug"
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/BurntSushi/toml"
@@ -57,8 +56,8 @@ func main() {
 
 	model := app.NewModel(
 		appName,
-		items.Build(cfg.Items),
-		theme.Build(cfg.Theme),
+		getEnabledItems(cfg),
+		getStyles(cfg),
 		*dryRun,
 	)
 	p := tea.NewProgram(
@@ -68,27 +67,4 @@ func main() {
 		log.Printf("error: %v", err)
 		os.Exit(1)
 	}
-}
-
-func printVersion() {
-	version := "unknown"
-	commit := "unknown"
-	buildTime := "unknown"
-	goVersion := "unknown"
-	if info, ok := debug.ReadBuildInfo(); ok {
-		version = info.Main.Version
-		goVersion = info.GoVersion
-		for _, setting := range info.Settings {
-			switch setting.Key {
-			case "vcs.revision":
-				commit = setting.Value
-			case "vcs.time":
-				buildTime = setting.Value
-			}
-		}
-	}
-	fmt.Printf("Version: %s\n", version)
-	fmt.Printf("Commit: %s\n", commit)
-	fmt.Printf("Build time: %s\n", buildTime)
-	fmt.Printf("Go version: %s\n", goVersion)
 }
