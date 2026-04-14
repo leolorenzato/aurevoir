@@ -1,6 +1,7 @@
 package items
 
 type RawCfg struct {
+	Order     *RawOrderCfg     `toml:"order"`
 	Lock      *RawLockCfg      `toml:"lock"`
 	Shutdown  *RawShutdownCfg  `toml:"shutdown"`
 	Reboot    *RawRebootCfg    `toml:"reboot"`
@@ -8,6 +9,8 @@ type RawCfg struct {
 	Suspend   *RawSuspendCfg   `toml:"suspend"`
 	Hibernate *RawHibernateCfg `toml:"hibernate"`
 }
+
+type RawOrderCfg []string
 
 type RawLockCfg struct {
 	Show *bool   `toml:"show"`
