@@ -10,7 +10,6 @@
 ### ✨ Features
 - ⚙️ Configurable commands
 - 🎨 Theme customization
-- 🪄 Zero configuration
 
 ### 🔧 Build from Source
 - check Go version (requires **Go 1.25+**)
