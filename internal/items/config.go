@@ -1,6 +1,23 @@
 package items
 
+import (
+	"aurevoir/internal/utils"
+	"fmt"
+)
+
+const (
+	lockId      ItemId = "lock"
+	shutdownId  ItemId = "shutdown"
+	rebootId    ItemId = "reboot"
+	logoutId    ItemId = "logout"
+	suspendId   ItemId = "suspend"
+	hibernateId ItemId = "hibernate"
+)
+
+type ItemId string
+
 type Cfg struct {
+	Order     OrderCfg
 	Lock      LockCfg
 	Shutdown  ShutdownCfg
 	Reboot    RebootCfg
@@ -10,6 +27,9 @@ type Cfg struct {
 }
 
 func (c *Cfg) MergeRaw(r RawCfg) {
+	if r.Order != nil {
+		c.Order.MergeRaw(*r.Order)
+	}
 	if r.Lock != nil {
 		c.Lock.MergeRaw(*r.Lock)
 	}
@@ -28,6 +48,68 @@ func (c *Cfg) MergeRaw(r RawCfg) {
 	if r.Hibernate != nil {
 		c.Hibernate.MergeRaw(*r.Hibernate)
 	}
+}
+
+func (c *Cfg) Validate() error {
+	if err := c.Order.Validate(); err != nil {
+		return fmt.Errorf("invalid configuration: %v", err)
+	}
+
+	return nil
+}
+
+type OrderCfg struct {
+	expectedItemIds map[ItemId]struct{}
+	ItemIds         []ItemId
+}
+
+func (c *OrderCfg) MergeRaw(r RawOrderCfg) {
+	c.ItemIds = []ItemId{}
+	for _, v := range r {
+		c.ItemIds = append(c.ItemIds, ItemId(v))
+	}
+}
+
+func (c *OrderCfg) Validate() error {
+	if err := c.checkDuplicateItemIds(); err != nil {
+		return fmt.Errorf("invalid order: %v", err)
+	}
+
+	if err := c.ensureExpectedItemIds(); err != nil {
+		return fmt.Errorf("invalid order: %v", err)
+	}
+
+	return nil
+}
+
+func (c *OrderCfg) checkDuplicateItemIds() error {
+	seen := make(map[ItemId]struct{})
+	for _, el := range c.ItemIds {
+		if _, ok := seen[el]; ok {
+			return fmt.Errorf("duplicate element: %s", el)
+		}
+		seen[el] = struct{}{}
+	}
+
+	return nil
+}
+
+func (c *OrderCfg) ensureExpectedItemIds() error {
+	itemIdsStr := make([]string, len(c.ItemIds))
+	for i, v := range c.ItemIds {
+		itemIdsStr[i] = string(v)
+	}
+
+	expectedItemIdsStr := make(map[string]struct{}, len(c.expectedItemIds))
+	for k := range c.expectedItemIds {
+		expectedItemIdsStr[string(k)] = struct{}{}
+	}
+
+	if !utils.HasSameKeys(utils.SliceToSet(itemIdsStr), expectedItemIdsStr) {
+		return fmt.Errorf("missing elements")
+	}
+
+	return nil
 }
 
 type LockCfg struct {
