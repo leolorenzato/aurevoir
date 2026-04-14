@@ -1,5 +1,7 @@
 package items
 
+import "aurevoir/internal/utils"
+
 func DefaultOrder() []ItemId {
 	return []ItemId{
 		lockId,
@@ -24,7 +26,9 @@ func DefaultCmds() map[ItemId]string {
 
 func DefaultCfg() Cfg {
 	defaultCmds := DefaultCmds()
+
 	return Cfg{
+		Order: buildDefaultOrder(),
 		Lock: LockCfg{
 			Show: true,
 			Icon: "",
@@ -55,5 +59,26 @@ func DefaultCfg() Cfg {
 			Icon: "",
 			Cmd:  defaultCmds[hibernateId],
 		},
+	}
+}
+
+func buildDefaultOrder() OrderCfg {
+	itemIds := DefaultOrder()
+
+	itemIdsStr := make([]string, len(itemIds))
+	for i, v := range itemIds {
+		itemIdsStr[i] = string(v)
+	}
+
+	expectedItemIdsStr := utils.SliceToSet(itemIdsStr)
+
+	expectedItemIds := make(map[ItemId]struct{}, len(expectedItemIdsStr))
+	for k := range expectedItemIdsStr {
+		expectedItemIds[ItemId(k)] = struct{}{}
+	}
+
+	return OrderCfg{
+		expectedItemIds: expectedItemIds,
+		ItemIds:         itemIds,
 	}
 }

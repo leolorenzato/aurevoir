@@ -1,6 +1,9 @@
 package items
 
-import "fmt"
+import (
+	"aurevoir/internal/utils"
+	"fmt"
+)
 
 const (
 	lockId      ItemId = "lock"
@@ -14,6 +17,7 @@ const (
 type ItemId string
 
 type Cfg struct {
+	Order     OrderCfg
 	Lock      LockCfg
 	Shutdown  ShutdownCfg
 	Reboot    RebootCfg
@@ -23,6 +27,9 @@ type Cfg struct {
 }
 
 func (c *Cfg) MergeRaw(r RawCfg) {
+	if r.Order != nil {
+		c.Order.MergeRaw(*r.Order)
+	}
 	if r.Lock != nil {
 		c.Lock.MergeRaw(*r.Lock)
 	}
@@ -43,12 +50,21 @@ func (c *Cfg) MergeRaw(r RawCfg) {
 	}
 }
 
+func (c *Cfg) Validate() error {
+	if err := c.Order.Validate(); err != nil {
+		return fmt.Errorf("invalid configuration: %v", err)
+	}
+
+	return nil
+}
+
 type OrderCfg struct {
 	expectedItemIds map[ItemId]struct{}
 	ItemIds         []ItemId
 }
 
 func (c *OrderCfg) MergeRaw(r RawOrderCfg) {
+	c.ItemIds = []ItemId{}
 	for _, v := range r {
 		c.ItemIds = append(c.ItemIds, ItemId(v))
 	}
@@ -89,31 +105,11 @@ func (c *OrderCfg) ensureExpectedItemIds() error {
 		expectedItemIdsStr[string(k)] = struct{}{}
 	}
 
-	if !sameKeys(listToSet(itemIdsStr), expectedItemIdsStr) {
+	if !utils.HasSameKeys(utils.SliceToSet(itemIdsStr), expectedItemIdsStr) {
 		return fmt.Errorf("missing elements")
 	}
 
 	return nil
-}
-
-func listToSet(l []string) map[string]struct{} {
-	set := make(map[string]struct{}, len(l))
-	for _, v := range l {
-		set[v] = struct{}{}
-	}
-	return set
-}
-
-func sameKeys(a, b map[string]struct{}) bool {
-	if len(a) != len(b) {
-		return false
-	}
-	for k := range a {
-		if _, ok := b[k]; !ok {
-			return false
-		}
-	}
-	return true
 }
 
 type LockCfg struct {

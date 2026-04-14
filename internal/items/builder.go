@@ -10,15 +10,35 @@ const (
 )
 
 func Build(cfg Cfg) []Item {
+	type builderFunc func(Cfg) Item
 
-	return []Item{
-		buildLockItem(cfg.Lock),
-		buildShutdownItem(cfg.Shutdown),
-		buildRebootItem(cfg.Reboot),
-		buildLogoutItem(cfg.Logout),
-		buildSuspendItem(cfg.Suspend),
-		buildHibernateItem(cfg.Hibernate),
+	var builders = map[ItemId]builderFunc{
+		lockId: func(cfg Cfg) Item {
+			return buildLockItem(cfg.Lock)
+		},
+		shutdownId: func(cfg Cfg) Item {
+			return buildShutdownItem(cfg.Shutdown)
+		},
+		rebootId: func(cfg Cfg) Item {
+			return buildRebootItem(cfg.Reboot)
+		},
+		logoutId: func(cfg Cfg) Item {
+			return buildLogoutItem(cfg.Logout)
+		},
+		suspendId: func(cfg Cfg) Item {
+			return buildSuspendItem(cfg.Suspend)
+		},
+		hibernateId: func(cfg Cfg) Item {
+			return buildHibernateItem(cfg.Hibernate)
+		},
 	}
+
+	var items []Item
+	for _, itemId := range cfg.Order.ItemIds {
+		items = append(items, builders[itemId](cfg))
+	}
+
+	return items
 }
 
 func buildShutdownItem(cfg ShutdownCfg) Item {

@@ -31,7 +31,7 @@ func main() {
 	if *debug {
 		f, err := getLogFile()
 		if err != nil {
-			fmt.Println("failed to setup the logger: ", err)
+			fmt.Printf("failed to setup the logger: %v\n", err)
 			os.Exit(1)
 		}
 		defer f.Close()
@@ -50,7 +50,13 @@ func main() {
 			log.Printf("failed to load configuration file %s", *cfgPath)
 			os.Exit(1)
 		}
+
 		cfg.Items.MergeRaw(rawCfg.Items)
+		if err := cfg.Items.Validate(); err != nil {
+			log.Printf("failed to validate the configuration: %v", err)
+			os.Exit(1)
+		}
+
 		cfg.Theme.MergeRaw(rawCfg.Theme)
 	}
 
