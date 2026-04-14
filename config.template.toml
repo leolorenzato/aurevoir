@@ -1,3 +1,6 @@
+[items]
+order = ["lock", "shutdown", "reboot", "logout", "suspend", "hibernate"]
+
 [items.lock]
 show = true
 icon = ""
