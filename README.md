@@ -1,4 +1,4 @@
-# aurevoir
+# aurevoir 🌙
 
 ![GitHub License](https://img.shields.io/github/license/leolorenzato/aurevoir)
 [![Go Report Card](https://goreportcard.com/badge/github.com/leolorenzato/aurevoir)](https://goreportcard.com/report/github.com/leolorenzato/aurevoir)
