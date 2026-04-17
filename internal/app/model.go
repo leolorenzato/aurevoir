@@ -8,6 +8,7 @@ import (
 	"aurevoir/internal/components/types"
 	"aurevoir/internal/items"
 	"aurevoir/internal/theme"
+	"fmt"
 
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
@@ -78,6 +79,18 @@ func (m Model) Init() tea.Cmd {
 	}
 
 	return tea.Batch(cmds...)
+}
+
+func (m Model) getAvailableSize() (types.Size, error) {
+	if m.termSize.Width <= 0 || m.termSize.Height <= 0 {
+		return types.Size{}, fmt.Errorf(
+			"invalid available size, width: %d height %d",
+			m.termSize.Width,
+			m.termSize.Height,
+		)
+	}
+
+	return m.termSize, nil
 }
 
 func itemToMenuItem(item items.Item) menu.Item {
