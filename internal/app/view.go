@@ -20,7 +20,12 @@ func (m Model) View() tea.View {
 }
 
 func (m Model) view() string {
-	containerAvailableSize := m.termSize
+	containerAvailableSize, err := m.getAvailableSize()
+	if err != nil {
+		log.Printf("failed to get available size: %v", err)
+		return m.viewErr(fmt.Errorf("invalid available size"), containerAvailableSize)
+	}
+
 	containerContentSize, err := layout.GetStyleContentSize(
 		m.containerStyle,
 		containerAvailableSize,
@@ -62,12 +67,14 @@ func (m Model) getContent(containerAvailableSize types.Size) (string, error) {
 	m.title.AvailableSize = containerContentAvailableSize
 	renderedTitle, err := m.title.View()
 	if err != nil {
+		log.Printf("title rendering error: %v", err)
 		return "", fmt.Errorf("title rendering error")
 	}
 
 	m.footer.AvailableSize = containerContentAvailableSize
 	renderedFooter, err := m.footer.View()
 	if err != nil {
+		log.Printf("footer rendering error: %v", err)
 		return "", fmt.Errorf("footer rendering error")
 	}
 
@@ -84,12 +91,14 @@ func (m Model) getContent(containerAvailableSize types.Size) (string, error) {
 	m.menu.AvailableSize = containerContentFreeSize
 	renderedMenu, err := m.menu.View()
 	if err != nil {
+		log.Printf("menu rendering error: %v", err)
 		return "", fmt.Errorf("menu rendering error")
 	}
 
 	m.confirm_dialog.AvailableSize = containerContentFreeSize
 	renderedConfirmDialog, err := m.confirm_dialog.View()
 	if err != nil {
+		log.Printf("confirm dialog rendering error: %v", err)
 		return "", fmt.Errorf("confirm dialog rendering error")
 	}
 
