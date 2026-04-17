@@ -75,9 +75,13 @@ func (m Model) render() (string, error) {
 }
 
 func (m Model) renderMenuItem(item Item, itemIndex int) (string, error) {
+	containerAvailableSize, err := m.getAvailableSize()
+	if err != nil {
+		return "", err
+	}
 	availableContentWidth, err := layout.GetStyleContentAvailableWidth(
 		m.ContainerStyle,
-		m.AvailableSize.Width,
+		containerAvailableSize.Width,
 	)
 	if err != nil {
 		return "", err
