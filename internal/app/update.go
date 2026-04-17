@@ -5,12 +5,15 @@ import (
 	"aurevoir/internal/components/footer"
 	"aurevoir/internal/components/menu"
 	"aurevoir/internal/components/title"
+	"log"
 
 	tea "charm.land/bubbletea/v2"
 )
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmds []tea.Cmd
+
+	log.Printf("got message %T", msg)
 
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
