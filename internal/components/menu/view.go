@@ -2,6 +2,7 @@ package menu
 
 import (
 	"aurevoir/internal/layout"
+	"fmt"
 	"slices"
 
 	"charm.land/lipgloss/v2"
@@ -31,6 +32,10 @@ func (m Model) render() (string, error) {
 	)
 	if err != nil {
 		return "", err
+	}
+
+	if availableContentSize.Height <= 1 {
+		return "", fmt.Errorf("invalid menu height %d, must be >= 1", availableContentSize.Height)
 	}
 
 	var items []string
