@@ -2,7 +2,7 @@ package title
 
 import (
 	"aurevoir/internal/layout"
-	"log"
+	"fmt"
 
 	"charm.land/lipgloss/v2"
 )
@@ -10,7 +10,6 @@ import (
 func (m Model) View() (string, error) {
 	rendered, err := m.render()
 	if err != nil {
-		log.Printf("title render error: %v", err)
 		return "", err
 	}
 
@@ -18,26 +17,30 @@ func (m Model) View() (string, error) {
 }
 
 func (m Model) render() (string, error) {
-	containerAvailableSize, err := m.getAvailableSize()
+	availableSize, err := m.getAvailableSize()
 	if err != nil {
 		return "", err
 	}
-	contentSize, err := layout.GetStyleContentSize(m.Style, containerAvailableSize)
+
+	contentSize, err := layout.GetStyleContentSize(m.Style, availableSize)
 	if err != nil {
 		return "", err
 	}
-	availableContentSize, err := layout.GetStyleContentAvailableSize(m.Style, containerAvailableSize)
-	if err != nil {
-		return "", err
-	}
-	truncText := layout.Truncate(
-		layout.StripNonSpaceWhitespace(m.text),
-		availableContentSize.Width,
-		"",
+
+	availableContentSize, err := layout.GetStyleContentAvailableSize(
+		m.Style,
+		availableSize,
 	)
+	if err != nil {
+		return "", err
+	}
+
+	if lipgloss.Width(m.text) > availableContentSize.Width {
+		return "", fmt.Errorf("text too long")
+	}
 
 	return (m.Style.
 		Width(contentSize.Width).
 		Align(lipgloss.Center, lipgloss.Center).
-		Render(truncText)), nil
+		Render(m.text)), nil
 }
