@@ -2,7 +2,6 @@ package menu
 
 import (
 	"aurevoir/internal/layout"
-	"log"
 	"slices"
 
 	"charm.land/lipgloss/v2"
@@ -11,7 +10,6 @@ import (
 func (m Model) View() (string, error) {
 	rendered, err := m.render()
 	if err != nil {
-		log.Printf("menu render error: %v", err)
 		return "", err
 	}
 

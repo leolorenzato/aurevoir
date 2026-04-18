@@ -2,7 +2,6 @@ package footer
 
 import (
 	"aurevoir/internal/layout"
-	"log"
 
 	"charm.land/lipgloss/v2"
 )
@@ -10,7 +9,6 @@ import (
 func (m Model) View() (string, error) {
 	rendered, err := m.render()
 	if err != nil {
-		log.Printf("footer render error: %v", err)
 		return "", err
 	}
 

@@ -3,7 +3,6 @@ package confirm_dialog
 import (
 	"aurevoir/internal/layout"
 	"fmt"
-	"log"
 
 	"charm.land/lipgloss/v2"
 )
@@ -14,7 +13,6 @@ func (m Model) View() (string, error) {
 	}
 	rendered, err := m.render()
 	if err != nil {
-		log.Printf("menu render error: %v", err)
 		return "", err
 	}
 
