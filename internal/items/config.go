@@ -3,6 +3,7 @@ package items
 import (
 	"aurevoir/internal/utils"
 	"fmt"
+	"strings"
 )
 
 const (
@@ -86,7 +87,7 @@ func (c *OrderCfg) checkDuplicateItemIds() error {
 	seen := make(map[ItemId]struct{})
 	for _, el := range c.ItemIds {
 		if _, ok := seen[el]; ok {
-			return fmt.Errorf("duplicate element: %s", el)
+			return fmt.Errorf("duplicate item: %s", el)
 		}
 		seen[el] = struct{}{}
 	}
@@ -105,8 +106,9 @@ func (c *OrderCfg) ensureExpectedItemIds() error {
 		expectedItemIdsStr[string(k)] = struct{}{}
 	}
 
-	if !utils.HasSameKeys(utils.SliceToSet(itemIdsStr), expectedItemIdsStr) {
-		return fmt.Errorf("missing elements")
+	missingItems := utils.GetMissingKeys(expectedItemIdsStr, utils.SliceToSet(itemIdsStr))
+	if len(missingItems) > 0 {
+		return fmt.Errorf("missing items [%s]", strings.Join(missingItems, ", "))
 	}
 
 	return nil

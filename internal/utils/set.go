@@ -8,14 +8,13 @@ func SliceToSet(s []string) map[string]struct{} {
 	return set
 }
 
-func HasSameKeys(a, b map[string]struct{}) bool {
-	if len(a) != len(b) {
-		return false
-	}
+func GetMissingKeys(a, b map[string]struct{}) []string {
+	missing := []string{}
 	for k := range a {
 		if _, ok := b[k]; !ok {
-			return false
+			missing = append(missing, k)
 		}
 	}
-	return true
+
+	return missing
 }
