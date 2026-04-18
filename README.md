@@ -5,7 +5,7 @@
 ![GitHub Release](https://img.shields.io/github/v/release/leolorenzato/aurevoir)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/leolorenzato/aurevoir)
 
-**aurevoir** is a lightweight **TUI power menu** written in Go with [Bubble Tea](https://github.com/charmbracelet/bubbletea).
+**aurevoir** is a **TUI power menu** written in Go with [Bubble Tea](https://github.com/charmbracelet/bubbletea).
 
 ### ✨ Features
 - ⚙️ Configurable commands
