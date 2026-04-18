@@ -16,11 +16,11 @@ func (m Model) View() (string, error) {
 }
 
 func (m Model) render() (string, error) {
-	containerAvailableSize, err := m.getAvailableSize()
+	availableSize, err := m.getAvailableSize()
 	if err != nil {
 		return "", err
 	}
-	contentSize, err := layout.GetStyleContentSize(m.Style, containerAvailableSize)
+	contentSize, err := layout.GetStyleContentSize(m.Style, availableSize)
 	if err != nil {
 		return "", err
 	}
