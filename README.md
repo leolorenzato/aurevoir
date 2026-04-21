@@ -45,6 +45,7 @@ See the [configuration template](https://github.com/leolorenzato/aurevoir/blob/m
     ```
 
 ## Hyprland
+
 ### Configuration
 In the Hyprland ecosystem you tipically use [hyprlock](https://wiki.hypr.land/Hypr-Ecosystem/hyprlock/) and [hyprshutdown](https://wiki.hypr.land/Hypr-Ecosystem/hyprshutdown/). To better integrate with the ecosystem, you can use a custom configuration like the following:
 ```toml
